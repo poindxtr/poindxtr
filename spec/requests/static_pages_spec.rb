@@ -9,9 +9,14 @@ describe "StaticPages" do
       page.should have_selector("h1", :text => "Home")
     end
 
-    it "should have the title 'Home'" do
+    it "should have the base title 'Demo'" do
       visit '/static_pages/home'
-      page.should have_selector("title", :text => "Home")
+      page.should have_selector("title", :text => "Demo")
+    end
+
+    it "should not have the custome title 'Home'" do
+      visit '/static_pages/home'
+      page.should_not have_selector("title", :text => "Home")
     end
   end
 
