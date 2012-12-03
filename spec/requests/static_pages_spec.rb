@@ -4,9 +4,9 @@ describe "StaticPages" do
 
   describe "Home Page" do
 
-    it "should have the h1 'Home'" do
+    it "should have the h1 'Demo'" do
       visit '/static_pages/home'
-      page.should have_selector("h1", :text => "Home")
+      page.should have_selector("h1", :text => "Demo")
     end
 
     it "should have the base title 'Demo'" do
