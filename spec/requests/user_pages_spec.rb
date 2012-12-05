@@ -13,9 +13,29 @@ describe "UserPages" do
 
   describe "Sign Up Page" do
     before { visit signup_path }
+    let(:submit) { "Create my account" }
 
     it { should have_selector("h1",     text: "Sign Up") }
     it { should have_selector("title",  text: "Sign Up") }
+
+    describe "with invalid information" do
+      it "should not create a user" do
+        expect { click_button submit }.not_to change(User, :count)
+      end
+    end
+
+    describe "with valid information" do
+      before do
+        fill_in "Name",         with: "Example User"
+        fill_in "Email",        with: "user@example.com"
+        fill_in "Password",     with: "foobar"
+        fill_in "Confirmation", with: "foobar"
+      end
+
+      it "should create a user" do
+        expect { click_button submit }.to change(User, :count).by(1)
+      end
+    end
   end
   # describe "GET /user_pages" do
   #   it "works! (now write some real specs)" do
