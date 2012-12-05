@@ -9,7 +9,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(params[:user])
-    render "show"
+    @user = User.new(params[:user])
+    if @user.save
+      render "show"
+    else
+      render "new"
+    end
   end
 end
