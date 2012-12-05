@@ -5,7 +5,7 @@ describe "Static Pages" do
 
   shared_examples_for "all static pages" do
     it { should have_selector("h1",     text: heading) }
-    it { should have_selector("title",  text: full_title(page_title) ) }
+    it { should have_selector("title",  text: page_title ) }
   end
 
   describe "Home Page" do
@@ -49,16 +49,16 @@ describe "Static Pages" do
     visit root_url
 
     click_link "Sign up now!"
-    page.should have_selector "title", text: full_title("Sign Up")
+    page.should have_selector "title", text: "Sign Up"
 
     click_link "Help"
-    page.should have_selector "title", text: full_title("Help")
+    page.should have_selector "title", text: "Help"
 
     click_link "About"
-    page.should have_selector "title", text: full_title("About Us")
+    page.should have_selector "title", text: "About Us"
 
     click_link "Contact"
-    page.should have_selector "title", text: full_title("Contact")
+    page.should have_selector "title", text: "Contact"
 
     click_link "Demo"
     page.should have_selector "title", text: full_title("")
