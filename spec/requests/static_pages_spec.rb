@@ -60,6 +60,9 @@ describe "Static Pages" do
     click_link "Contact"
     page.should have_selector "title", text: "Contact"
 
+    click_link "Sign In"
+    page.should have_selector "title", text: "Sign In"
+
     click_link "Demo"
     page.should have_selector "title", text: full_title("")
   end
