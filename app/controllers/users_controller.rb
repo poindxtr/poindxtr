@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update]
+  before_filter :signed_out_user, only: [:new, :create]
   before_filter :correct_user, only: [:edit, :update]
 
   def show
@@ -41,6 +42,10 @@ class UsersController < ApplicationController
         store_location
         redirect_to signin_path, notice: "Please sign in."
       end
+    end
+
+    def signed_out_user
+      redirect_to root_path if signed_in?
     end
 
     def correct_user

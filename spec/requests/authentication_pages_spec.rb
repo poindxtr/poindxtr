@@ -93,6 +93,21 @@ describe "Authentication" do
         specify { response.should redirect_to(root_path) }
       end
     end
+
+    describe "as a signed in user" do
+      before { sign_in user }
+
+      describe "visiting sign up page" do
+        before { visit signup_path }
+        it { should have_selector("h1", text: "Demo") }
+        it { should_not have_selector("title", text: "Sign Up") }
+      end
+
+      describe "submitting to Users#create action" do
+        before { post users_path }
+        specify { response.should redirect_to(root_path) }
+      end
+    end
   end
   # describe "GET /authentication_pages" do
   #   it "works! (now write some real specs)" do
