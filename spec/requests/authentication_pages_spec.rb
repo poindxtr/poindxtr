@@ -50,13 +50,18 @@ describe "Authentication" do
         before { visit edit_user_path(user) }
 
         describe "after signing in" do
-          before do
-            fill_in "Email", with: user.email
-            fill_in "Password", with: user.password
-            click_button "Sign In"
-          end
+          before { valid_signin(user) }
 
           it { should have_selector("title", text: "Edit User") }
+
+          describe "when signing in again" do
+            before do
+              sign_out
+              sign_in(user)
+            end
+
+            it { should have_selector("title", text: user.name) }
+          end
         end
       end
 

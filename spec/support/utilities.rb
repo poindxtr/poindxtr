@@ -2,12 +2,20 @@ include ApplicationHelper
 
 def sign_in(user)
   visit signin_path
+  valid_signin(user)
+end
+
+def valid_signin(user)
   fill_in "Email",    with: user.email
   fill_in "Password", with: user.password
   click_button "Sign In"
 
   # Sign in when not using Capybara as well.
   cookies[:remember_token] = user.remember_token
+end
+
+def sign_out
+  delete signout_path
 end
 
 def valid_signup
