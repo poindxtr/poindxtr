@@ -45,8 +45,45 @@ describe "UserPages" do
 
         it { should have_selector("title",  text: user.name) }
         it { should have_success_message("Welcome") }
-        it { should have_link("Sign Out") }
+        it { should have_link("Sign Out", href: signout_path) }
       end
+    end
+  end
+
+  describe "Edit Page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:submit) { "Save changes" }
+    before { visit edit_user_path(user) }
+
+    it { should have_selector("h1",     text: "Update your profile") }
+    it { should have_selector("title",  text: "Edit User") }
+    it { should have_link("change",  href: "http://gavatar.com/emails") }
+
+    describe "with invalid information" do
+      before { click_button submit }
+
+      it { should have_selector("title", text: "Edit User") }
+      it { should have_content("error") }
+    end
+
+    describe "with valid information" do
+      let(:new_name) { "New Name" }
+      let(:new_email) { "new@poindxtr.com" }
+
+      before {
+        fill_in "Name", with: new_name
+        fill_in "Email", with: new_email
+        fill_in "Password", with: user.password
+        fill_in "Confirmation", with: user.password 
+        click_button submit
+      }
+
+      it { should have_selector("title",  text: new_name) }
+      it { should have_success_message }
+      it { should have_link("Sign Out", href: signout_path) }
+
+      specify { user.reload.name.should == new_name }
+      specify { user.reload.email.should == new_email }
     end
   end
   # describe "GET /user_pages" do
