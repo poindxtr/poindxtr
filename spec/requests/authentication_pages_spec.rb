@@ -46,6 +46,20 @@ describe "Authentication" do
 
     describe "for non-signed-in users" do
 
+      describe "when attempting to visit a protected page" do
+        before { visit edit_user_path(user) }
+
+        describe "after signing in" do
+          before do
+            fill_in "Email", with: user.email
+            fill_in "Password", with: user.password
+            click_button "Sign In"
+          end
+
+          it { should have_selector("title", text: "Edit User") }
+        end
+      end
+
       describe "in the Users controller" do
 
         describe "visiting the edit page" do
