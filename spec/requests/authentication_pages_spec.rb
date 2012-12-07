@@ -59,6 +59,21 @@ describe "Authentication" do
         end
       end
     end
+
+    describe "as a wrong user" do
+      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@poindxtr.com") }
+      before { sign_in user }
+
+      describe "visiting Users#edit page" do
+        before { visit edit_user_path(wrong_user) }
+        it { should_not have_selector("title", text: "Edit User") }
+      end
+
+      describe "submitting to Users#update action" do
+        before { put user_path(wrong_user) }
+        specify { response.should redirect_to(root_path) }
+      end
+    end
   end
   # describe "GET /authentication_pages" do
   #   it "works! (now write some real specs)" do
