@@ -38,6 +38,11 @@ describe "Authentication" do
       describe "followed by signout" do
         before { click_link "Sign Out" }
         it { should have_link("Sign In") }
+
+        it { should_not have_link("Users", href: users_path) }
+        it { should_not have_link("Profile", href: user_path(user)) }
+        it { should_not have_link("Setting", href: edit_user_path(user)) }
+        it { should_not have_link("Sign Out", href: signout_path) }
       end
     end
   end
